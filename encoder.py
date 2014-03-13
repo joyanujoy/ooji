@@ -1,14 +1,23 @@
-"""
-Encoder class provides methods to
-    - encode given integer to any base, default base62
-    - decode given word to an integer
-"""
+# -*- coding: utf-8 -*
 
 DFLT_GLYPHS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
 
 def is_valid(glyph_str):
-    """ validates if glyph_str is alphanumeric and contains unique chars """
+    """ Validates if glyph_str is alphanumeric and contains unique chars
+
+    Parameters
+    ----------
+    glyph_str : string
+        glyph alphabet to be used for number encoding
+
+    Returns
+    -------
+    True when:
+        glyph string is alphanumeric
+        Each char occurs only once
+
+    """
     uniq = True
     if len({x for x in glyph_str}) != len(glyph_str):
         uniq = False
@@ -17,10 +26,15 @@ def is_valid(glyph_str):
 
 
 class Encoder(object):
-    """
-    Encoder class provides methods to
-    - encode given integer to any base, default base62
-    - decode given word to an integer
+    """ Encoder class provides methods to
+            Encode an integer to any base, default base62
+            Decode encoded word to an integer
+    Attributes
+    ----------
+    glyphs : string
+        An alphabet to represent numbers. Default is Base62 [a-zA-z0-9]
+    base : integer
+        Base for number encoding
     """
 
     def __init__(self, glyphs=DFLT_GLYPHS):
@@ -32,9 +46,20 @@ class Encoder(object):
         self.base = len(glyphs)
 
     def encode(self, num):
-        """
-        @param num : integer
-        @returns : encoded number
+        """ Convert integer to base
+
+        Parameters
+        ----------
+        num : integer
+
+        Returns
+        -------
+        word : string
+            num is encoded in base and returned as string
+
+        Raises
+        ------
+        TypeError : Non integer param
         """
         if not isinstance(num, int):
             raise TypeError("Invalid number. Enter integer")
@@ -53,9 +78,22 @@ class Encoder(object):
         return ''.join(stack)
 
     def decode(self, word):
-        """
-        @param word : encoded string
-        @returns : decoded decimal integer number
+        """ Decode word to number
+
+        Parameters
+        ----------
+        word : string
+            encoded string
+
+        Returns
+        -------
+        number : integer
+            decoded number
+
+        Raises
+        ------
+        TypeError : Non string param
+
         """
         if not isinstance(word, str):
             raise TypeError("Invalid word. Enter string")

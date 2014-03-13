@@ -1,9 +1,8 @@
 """
     Test cases for Encoder class
 """
-from nose.tools import assert_raises
-import encoder
-
+from nose.tools import assert_raises, assert_false
+from . import encoder
 
 class TestEncoder:
 
@@ -13,11 +12,11 @@ class TestEncoder:
 
     def test_isvalid_non_alphanum(self):
         g = 'bcery428)'
-        assert False == encoder.is_valid(g)
+        assert_false == encoder.is_valid(g)
 
     def test_isvalid_duplicates(self):
         g = '00123454AA'
-        assert False == encoder.is_valid(g)
+        assert_false == encoder.is_valid(g)
 
     def test_init_invalidglyph(self):
         g = '_111'
