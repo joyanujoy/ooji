@@ -2,7 +2,7 @@
     Test cases for Encoder class
 """
 from nose.tools import assert_raises, assert_false
-from . import encoder
+import encoder
 
 class TestEncoder:
 
