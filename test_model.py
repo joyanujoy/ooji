@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 from model import Request, Url, Model
+import urllib2
 
 
 class TestModel:
@@ -22,8 +24,20 @@ class TestModel:
 
     def test_model_add_url(self):
         m = Model('postgresql', 'ajoy', 'ajoy', 'localhost', '5432', 'ajoy')
-        urls = ['http://python.org', 'http://python.org', 'http://google.com']
+        urls = [u'http://python.org', u'http://python.org', u'http://google.com']
+
         for url in urls:
-            id = m.add_url(url)
+            url_enc = urllib2.quote(url.encode('utf8'))
+            id = m.add_url(url_enc)
             assert isinstance(id, int)
 
+    def test_mode_query_url(self):
+        m = Model('postgresql', 'ajoy', 'ajoy', 'localhost', '5432', 'ajoy')
+        urls = [u'http://python.org', u'http://python.org',
+                u'http://google.com',
+                u'http://example.com/düsseldorf?neighbourhood=Lörick']
+        for url in urls:
+            url_enc = urllib2.quote(url.encode('utf8'))
+            id = m.add_url(url_enc)
+            url_from_query = m.query_url(id)
+            assert url_from_query == url_enc
