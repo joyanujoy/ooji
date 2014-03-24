@@ -87,7 +87,7 @@ class Model(object):
 
         Parameters
         ----------
-        url : String e.g http://python.org
+        url : URL encoded String e.g http://www.example.com/d%C3%BCsseldorf?neighbourhood=L%C3%B6rick
 
         Returns
         -------
@@ -103,6 +103,7 @@ class Model(object):
         except IntegrityError:
             self.session.rollback()  # ie url is already in url table, ignore
         except:
+            self.session.rollback()
             raise
 
         req_obj = Request(uid)
@@ -113,4 +114,37 @@ class Model(object):
         except:
             raise
 
-        return req_obj.id
+        id = req_obj.id
+
+        try:
+            self.session.expunge(url_obj)
+            self.session.expunge(req_obj)
+        except:
+            pass
+
+        return id
+
+    def query_url(self, url_id):
+        """
+        Queries for url_id in database and returns url_Text
+
+        Parameters
+        ----------
+        url_id : Integer id of the URL
+
+        Returns
+        -------
+        url_text : URL as urlencoded String, from Url table
+        """
+        try:
+            url = (
+                self.session.query(Url.url_text)
+                .join(Request)
+                .filter_by(id=url_id)
+                .scalar()
+            )
+
+        except:
+            raise
+
+        return url
