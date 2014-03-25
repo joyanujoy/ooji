@@ -89,6 +89,9 @@ class Model(object):
         ----------
         url : URL encoded String e.g http://www.example.com/d%C3%BCsseldorf?neighbourhood=L%C3%B6rick
 
+                Input URL needs to be url encoded because SHA encoder doesn't
+                accept utf8
+
         Returns
         -------
         id : Integer, record id from database
