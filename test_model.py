@@ -40,5 +40,4 @@ class TestModel:
             url_enc = urllib2.quote(url)
             id = m.add_url(url_enc)
             url_from_query = m.query_url(id)
-            print url,',',url_from_query
             assert urllib2.unquote(url_from_query.encode('utf8')) == url
