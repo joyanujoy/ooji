@@ -8,12 +8,11 @@ My url shortener
 @todo
 
                                     /-------- encoder.py
-                                   /
-    ooji.py    -------------------/---------- filestore.py
-    controller                    \
-      |                            \
-      |                             \-------- postgrestore.py
-      |                              \------- redistore.py
+                                   /                                        /-----Table Request
+    ooji.py    -------------------/---------- model.py---------postgresQLDB/
+    controller                                                             \
+      |                                                                     \-----Table Url
+      |                              
       |
       |
       |
