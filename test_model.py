@@ -31,13 +31,14 @@ class TestModel:
             id = m.add_url(url_enc)
             assert isinstance(id, int)
 
-    def test_mode_query_url(self):
+    def test_model_query_url(self):
         m = Model('postgresql', 'ajoy', 'ajoy', 'localhost', '5432', 'ajoy')
-        urls = [u'http://python.org', u'http://python.org',
-                u'http://google.com',
-                u'http://example.com/düsseldorf?neighbourhood=Lörick']
+        urls = ['http://python.org', u'http://python.org',
+                'http://google.com',
+                'http://example.com/düsseldorf?neighbourhood=Lörick']
         for url in urls:
-            url_enc = urllib2.quote(url.encode('utf8'))
+            url_enc = urllib2.quote(url)
             id = m.add_url(url_enc)
             url_from_query = m.query_url(id)
-            assert url_from_query == url_enc
+            print url,',',url_from_query
+            assert urllib2.unquote(url_from_query.encode('utf8')) == url
